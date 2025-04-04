@@ -13,6 +13,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::get('/chat', [App\Http\Controllers\Web\ChatController::class, 'index'])->name('chat.index');
+    Route::post('/chat', [App\Http\Controllers\Web\ChatController::class, 'storeConversation'])->name('chat.store.conversation');
     Route::post('/chat/{conversation}', [App\Http\Controllers\Web\ChatController::class, 'store'])->name('chat.store');
     Route::get('/chat/{conversation}', [App\Http\Controllers\Web\ChatController::class, 'show'])->name('chat.show');
 

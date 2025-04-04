@@ -11,20 +11,15 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 function Index({ users, conversations }) {
-    const { data, setData, post, processing } = useForm({
+    const { data, setData, post, processing, errors } = useForm({
         name: '',
         user_ids: [],
     });
 
     const handleCreateConversation = (userId: number) => {
-        if (!data.name.trim()) {
-            alert('Mohon isi judul percakapan terlebih dahulu.');
-            return;
-        }
-
         setData('user_ids', [userId]);
 
-        post(route('inertia.conversations.store'), {
+        post(route('chat.store.conversation'), {
             preserveScroll: true,
         });
     };
@@ -44,6 +39,8 @@ function Index({ users, conversations }) {
                             placeholder="Contoh: Diskusi Project"
                             className="w-full rounded border px-3 py-2 focus:ring focus:outline-none"
                         />
+                        {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
+                        {errors.user_ids && <p className="mt-2 text-sm text-red-500">{errors.user_ids}</p>}
                     </div>
                     <div className="mb-2 font-semibold">Kontak</div>
                     <div className="space-y-2">

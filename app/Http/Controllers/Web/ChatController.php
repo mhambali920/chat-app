@@ -86,4 +86,28 @@ class ChatController extends Controller
                 ->paginate(20),
         ]);
     }
+
+    public function storeConversation(Request $request)
+    {
+        $validated = $request->validate([
+            'user_ids' => 'required|array|min:1',
+            'user_ids.*' => 'exists:users,id',
+            'name' => 'required|string|max:255',
+        ]);
+
+        $conversation = Conversation::create([
+            'name' => $validated['name'],
+        ]);
+
+
+        // Tambahkan user yang login dan pastikan tidak duplikat
+        $userIds = array_unique(array_merge([$request->user()->id], $validated['user_ids']));
+        $conversation->users()->attach($userIds);
+        dd($conversation);
+
+        // return redirect()->route('chat.show', $conversation)
+        //     ->with('success', 'Percakapan berhasil dibuat.');
+        return redirect()->back()->with('success', 'Percakapan berhasil dibuat.');
+    }
+
 }
