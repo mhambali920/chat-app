@@ -16,4 +16,4 @@ Broadcast::channel('conversation.{conversationId}', function ($user, $conversati
     }
 
     return false;
-});
+}, ['guards' => ['api', 'web']]);
