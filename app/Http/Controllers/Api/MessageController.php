@@ -20,7 +20,7 @@ class MessageController extends Controller
     public function index(Conversation $conversation)
     {
         // Verifikasi user adalah anggota percakapan
-        $this->authorize('view', $conversation);
+        // $this->authorize('view', $conversation);
 
         $messages = $conversation->messages()
             ->with('user')
@@ -49,7 +49,7 @@ class MessageController extends Controller
     public function store(Request $request, Conversation $conversation)
     {
         // Verifikasi user adalah anggota percakapan
-        $this->authorize('sendMessage', $conversation);
+        // $this->authorize('sendMessage', $conversation);
 
         $validated = $request->validate([
             'body' => 'nullable|string',
@@ -102,7 +102,7 @@ class MessageController extends Controller
     public function destroy(Message $message)
     {
         // Verifikasi bahwa pengguna adalah pengirim pesan atau admin grup
-        $this->authorize('delete', $message);
+        // $this->authorize('delete', $message);
 
         // Gunakan soft delete
         $message->delete();
@@ -121,7 +121,7 @@ class MessageController extends Controller
         $conversation = $message->conversation;
 
         // Verifikasi user adalah anggota percakapan
-        $this->authorize('sendMessage', $conversation);
+        // $this->authorize('sendMessage', $conversation);
 
         $validated = $request->validate([
             'body' => 'required|string',

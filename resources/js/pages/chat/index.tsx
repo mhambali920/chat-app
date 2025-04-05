@@ -1,6 +1,6 @@
 import { UserInfo } from '@/components/user-info';
 import AppLayout from '@/layouts/app-layout';
-import { type BreadcrumbItem } from '@/types';
+import { User, type BreadcrumbItem } from '@/types';
 import { Head, Link, useForm } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -10,8 +10,8 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-function Index({ users, conversations }) {
-    const { data, setData, post, processing, errors } = useForm({
+function Index({ users, conversations }: { users: User[]; conversations: any }) {
+    const { data, setData, post, processing, errors } = useForm<{ name: string; user_ids: number[] }>({
         name: '',
         user_ids: [],
     });
